@@ -1,25 +1,19 @@
 "use client"
 
-import React, { useState } from "react"
+import { useState } from "react"
 import {
     Box,
     Card,
     CardContent,
     Typography,
-    Grid,
     Paper,
-    Drawer,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
     IconButton,
     Chip,
     Dialog,
     DialogTitle,
     DialogContent,
 } from "@mui/material"
+import { Grid } from "@mui/material"
 import {
     TrendingUp,
     TrendingDown,
@@ -28,13 +22,9 @@ import {
     AccountCircle,
     PersonOff,
     Info,
-    Logout,
-    Dashboard,
-    PersonAdd,
-    Settings,
-    Description,
     FiberManualRecord,
     ShowChart,
+    Chat,
 } from "@mui/icons-material"
 import {
     BarChart,
@@ -51,6 +41,9 @@ import {
     Tooltip,
 } from "recharts"
 
+import Sidebar, { drawerWidth } from "@/components/Sidebar"
+
+// Dummy data
 const transactionData = [
     { month: "Jan", amount: 150 },
     { month: "Feb", amount: 380 },
@@ -89,8 +82,6 @@ const dailyTransactionTrend = [
     { day: "Sun", transactions: 22000 },
 ]
 
-const drawerWidth = 280
-
 export default function CorporateBankingDashboard() {
     const [selectedMetric, setSelectedMetric] = useState<string | null>(null)
 
@@ -103,7 +94,6 @@ export default function CorporateBankingDashboard() {
             changeType: "positive",
             subtitle: "+112 from yesterday",
             icon: People,
-            color: "#1976d2",
         },
         {
             id: "daily-transactions",
@@ -113,7 +103,6 @@ export default function CorporateBankingDashboard() {
             changeType: "positive",
             subtitle: "+112 from yesterday",
             icon: CreditCard,
-            color: "#2e7d32",
         },
         {
             id: "active-accounts",
@@ -123,7 +112,6 @@ export default function CorporateBankingDashboard() {
             changeType: "positive",
             subtitle: "+112 from yesterday",
             icon: AccountCircle,
-            color: "#388e3c",
         },
         {
             id: "inactive-accounts",
@@ -133,52 +121,15 @@ export default function CorporateBankingDashboard() {
             changeType: "negative",
             subtitle: "-12 from yesterday",
             icon: PersonOff,
-            color: "#d32f2f",
         },
     ]
 
-    const sidebarItems = [
-        { text: "Dashboard", icon: Dashboard, active: true },
-        { text: "Customer Onboarding", icon: PersonAdd, active: false },
-        { text: "Customer Management", icon: People, active: false },
-        { text: "Approval", icon: Settings, active: false },
-        { text: "Audit Report", icon: Description, active: false },
-    ]
-
+    // Overlay details
     const renderOverlayContent = (metricId: string) => {
         switch (metricId) {
             case "corporate-accounts":
                 return (
                     <Box sx={{ p: 2 }}>
-                        <Grid container spacing={3} sx={{ mb: 4 }}>
-                            <Grid item xs={6}>
-                                <Card>
-                                    <CardContent sx={{ textAlign: "center", py: 3 }}>
-                                        <Typography variant="body2" color="text.secondary">
-                                            New This Month
-                                        </Typography>
-                                        <Typography variant="h4" fontWeight="bold">
-                                            112
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Card>
-                                    <CardContent sx={{ textAlign: "center", py: 3 }}>
-                                        <Typography variant="body2" color="text.secondary">
-                                            Growth Rate
-                                        </Typography>
-                                        <Typography variant="h4" fontWeight="bold" color="success.main">
-                                            5.1%
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid>
-                        </Grid>
-                        <Typography variant="h6" sx={{ mb: 2 }}>
-                            Account Growth Trend
-                        </Typography>
                         <ResponsiveContainer width="100%" height={300}>
                             <LineChart data={corporateAccountsData}>
                                 <CartesianGrid strokeDasharray="3 3" />
@@ -194,54 +145,13 @@ export default function CorporateBankingDashboard() {
             case "daily-transactions":
                 return (
                     <Box sx={{ p: 2 }}>
-                        <Grid container spacing={2} sx={{ mb: 4 }}>
-                            <Grid item xs={4}>
-                                <Card>
-                                    <CardContent sx={{ textAlign: "center", py: 2 }}>
-                                        <Typography variant="body2" color="text.secondary">
-                                            Peak Hour
-                                        </Typography>
-                                        <Typography variant="h6" fontWeight="bold">
-                                            2:00 PM
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                                <Card>
-                                    <CardContent sx={{ textAlign: "center", py: 2 }}>
-                                        <Typography variant="body2" color="text.secondary">
-                                            Avg Amount
-                                        </Typography>
-                                        <Typography variant="h6" fontWeight="bold">
-                                            $2,450
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                                <Card>
-                                    <CardContent sx={{ textAlign: "center", py: 2 }}>
-                                        <Typography variant="body2" color="text.secondary">
-                                            Success Rate
-                                        </Typography>
-                                        <Typography variant="h6" fontWeight="bold" color="success.main">
-                                            98.7%
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid>
-                        </Grid>
-                        <Typography variant="h6" sx={{ mb: 2 }}>
-                            Weekly Transaction Pattern
-                        </Typography>
                         <ResponsiveContainer width="100%" height={300}>
                             <BarChart data={dailyTransactionTrend}>
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <XAxis dataKey="day" />
                                 <YAxis />
                                 <Tooltip cursor={{ fill: "transparent" }} />
-                                <Bar dataKey="transactions" fill="#2e7d32" />
+                                <Bar dataKey="transactions" fill="#2e7d32" radius={[18, 18, 0, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
                     </Box>
@@ -250,35 +160,6 @@ export default function CorporateBankingDashboard() {
             case "active-accounts":
                 return (
                     <Box sx={{ p: 2 }}>
-                        <Grid container spacing={3} sx={{ mb: 4 }}>
-                            <Grid item xs={6}>
-                                <Card>
-                                    <CardContent sx={{ textAlign: "center", py: 3 }}>
-                                        <Typography variant="body2" color="text.secondary">
-                                            Last Login Today
-                                        </Typography>
-                                        <Typography variant="h4" fontWeight="bold">
-                                            1,247
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Card>
-                                    <CardContent sx={{ textAlign: "center", py: 3 }}>
-                                        <Typography variant="body2" color="text.secondary">
-                                            Active This Week
-                                        </Typography>
-                                        <Typography variant="h4" fontWeight="bold">
-                                            1,580
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid>
-                        </Grid>
-                        <Typography variant="h6" sx={{ mb: 2 }}>
-                            Active vs Inactive Distribution
-                        </Typography>
                         <ResponsiveContainer width="100%" height={300}>
                             <PieChart>
                                 <Pie
@@ -286,7 +167,7 @@ export default function CorporateBankingDashboard() {
                                     cx="50%"
                                     cy="50%"
                                     labelLine={false}
-                                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                                    label={({ name, percent }: any) => `${name} ${(percent * 100).toFixed(0)}%`}
                                     outerRadius={80}
                                     fill="#8884d8"
                                     dataKey="value"
@@ -304,32 +185,6 @@ export default function CorporateBankingDashboard() {
             case "inactive-accounts":
                 return (
                     <Box sx={{ p: 2 }}>
-                        <Grid container spacing={3} sx={{ mb: 4 }}>
-                            <Grid item xs={6}>
-                                <Card>
-                                    <CardContent sx={{ textAlign: "center", py: 3 }}>
-                                        <Typography variant="body2" color="text.secondary">
-                                            Dormant (&gt;90 days)
-                                        </Typography>
-                                        <Typography variant="h4" fontWeight="bold">
-                                            850
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Card>
-                                    <CardContent sx={{ textAlign: "center", py: 3 }}>
-                                        <Typography variant="body2" color="text.secondary">
-                                            Recently Inactive
-                                        </Typography>
-                                        <Typography variant="h4" fontWeight="bold">
-                                            350
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid>
-                        </Grid>
                         <Typography variant="h6" sx={{ mb: 3 }}>
                             Reactivation Opportunities
                         </Typography>
@@ -358,62 +213,7 @@ export default function CorporateBankingDashboard() {
     return (
         <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "grey.50" }}>
             {/* Sidebar */}
-            <Drawer
-                variant="permanent"
-                sx={{
-                    width: drawerWidth,
-                    flexShrink: 0,
-                    "& .MuiDrawer-paper": {
-                        width: drawerWidth,
-                        boxSizing: "border-box",
-                        bgcolor: "#1e3a8a",
-                        color: "white",
-                    },
-                }}
-            >
-                <Box sx={{ p: 3 }}>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 4 }}>
-                        <Box mb={3}>
-                            <img src="/assets/lotusss.png" alt="Lotus Bank" height={40} />
-                        </Box>
-                    </Box>
-
-                    <List sx={{ p: 0 }}>
-                        {sidebarItems.map((item) => (
-                            <ListItem key={item.text} disablePadding sx={{ mb: 1 }}>
-                                <ListItemButton
-                                    sx={{
-                                        borderRadius: 1,
-                                        bgcolor: item.active ? "#1565c0" : "transparent",
-                                        "&:hover": { bgcolor: "#1565c0" },
-                                        color: "white",
-                                    }}
-                                >
-                                    <ListItemIcon sx={{ color: "white", minWidth: 40 }}>
-                                        <item.icon />
-                                    </ListItemIcon>
-                                    <ListItemText primary={item.text} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </List>
-                </Box>
-
-                <Box sx={{ mt: "auto", p: 3 }}>
-                    <ListItemButton
-                        sx={{
-                            borderRadius: 1,
-                            "&:hover": { bgcolor: "#1565c0" },
-                            color: "white",
-                        }}
-                    >
-                        <ListItemIcon sx={{ color: "white", minWidth: 40 }}>
-                            <Logout />
-                        </ListItemIcon>
-                        <ListItemText primary="Sign Out" />
-                    </ListItemButton>
-                </Box>
-            </Drawer>
+            <Sidebar />
 
             {/* Main Content */}
             <Box
@@ -425,7 +225,6 @@ export default function CorporateBankingDashboard() {
                     overflow: "hidden",
                 }}
             >
-
                 <Box
                     sx={{
                         transform: { xs: "scale(1)", md: "scale(0.8)" },
@@ -434,7 +233,7 @@ export default function CorporateBankingDashboard() {
                     }}
                 >
                     {/* Header */}
-                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
                         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                             <FiberManualRecord sx={{ fontSize: 8, color: "#1976d2" }} />
                             <Typography variant="body2" color="text.secondary">
@@ -443,14 +242,11 @@ export default function CorporateBankingDashboard() {
                         </Box>
                         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                             <IconButton size="small">
-                                <Description />
-                            </IconButton>
-                            <IconButton size="small">
-                                <People />
+                                <Chat />
                             </IconButton>
                             <Typography variant="body2">
                                 <Box component="span" sx={{ color: "text.secondary" }}>
-                                    Olalekan Babatunde |{" "}
+                                    Olalekan Babatunde{" "}
                                 </Box>
                                 <Box component="span" sx={{ fontWeight: "medium" }}>
                                     Super Admin
@@ -471,55 +267,48 @@ export default function CorporateBankingDashboard() {
 
                     {/* Metrics Cards */}
                     <Grid container spacing={3} sx={{ mb: 4 }}>
-                        {metrics.map((metric) => {
-                            const Icon = metric.icon
-                            return (
-                                <Grid item xs={12} sm={6} lg={3} key={metric.id}>
-                                    <Card
-                                        sx={{
-                                            cursor: "pointer",
-                                            transition: "all 0.2s",
-                                            "&:hover": { boxShadow: 4 },
-                                        }}
-                                        onClick={() => setSelectedMetric(metric.id)}
-                                    >
-                                        <CardContent sx={{ p: 3 }}>
-                                            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 2 }}>
-                                                <Typography variant="subtitle1" fontWeight="medium">
-                                                    {metric.title}
-                                                </Typography>
-                                                <Info sx={{ fontSize: 16, color: "text.secondary" }} />
-                                            </Box>
-                                            <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1 }}>
-                                                <Typography variant="h4" fontWeight="bold">
-                                                    {metric.value}
-                                                </Typography>
-                                                <Box
-                                                    sx={{
-                                                        display: "flex",
-                                                        alignItems: "center",
-                                                        gap: 0.5,
-                                                        color: metric.changeType === "positive" ? "success.main" : "error.main",
-                                                    }}
-                                                >
-                                                    {metric.changeType === "positive" ? (
-                                                        <TrendingUp sx={{ fontSize: 16 }} />
-                                                    ) : (
-                                                        <TrendingDown sx={{ fontSize: 16 }} />
-                                                    )}
-                                                    <Typography variant="body2" fontWeight="medium">
-                                                        {metric.change}
-                                                    </Typography>
-                                                </Box>
-                                            </Box>
-                                            <Typography variant="body2" color="text.secondary">
-                                                {metric.subtitle}
+                        {metrics.map((metric) => (
+                            <Grid item xs={12} sm={6} lg={3} key={metric.id}>
+                                <Card
+                                    sx={{ cursor: "pointer", transition: "all 0.2s", "&:hover": { boxShadow: 4 } }}
+                                    onClick={() => setSelectedMetric(metric.id)}
+                                >
+                                    <CardContent sx={{ p: 3 }}>
+                                        <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
+                                            <Typography variant="subtitle1" fontWeight="medium">
+                                                {metric.title}
                                             </Typography>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-                            )
-                        })}
+                                            <Info sx={{ fontSize: 16, color: "text.secondary" }} />
+                                        </Box>
+                                        <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1 }}>
+                                            <Typography variant="h4" fontWeight="bold">
+                                                {metric.value}
+                                            </Typography>
+                                            <Box
+                                                sx={{
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    gap: 0.5,
+                                                    color: metric.changeType === "positive" ? "success.main" : "error.main",
+                                                }}
+                                            >
+                                                {metric.changeType === "positive" ? (
+                                                    <TrendingUp sx={{ fontSize: 16 }} />
+                                                ) : (
+                                                    <TrendingDown sx={{ fontSize: 16 }} />
+                                                )}
+                                                <Typography variant="body2" fontWeight="medium">
+                                                    {metric.change}
+                                                </Typography>
+                                            </Box>
+                                        </Box>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {metric.subtitle}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        ))}
                     </Grid>
 
                     {/* Transaction Trend Chart */}
@@ -536,7 +325,7 @@ export default function CorporateBankingDashboard() {
                                 <XAxis dataKey="month" />
                                 <YAxis />
                                 <Tooltip cursor={{ fill: "transparent" }} />
-                                <Bar dataKey="amount" fill="#1976d2" />
+                                <Bar dataKey="amount" fill="#1976d2" radius={[18, 18, 0, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
                     </Card>
@@ -550,9 +339,7 @@ export default function CorporateBankingDashboard() {
                 fullWidth
                 maxWidth="md"
             >
-                <DialogTitle>
-                    {metrics.find((m) => m.id === selectedMetric)?.title}
-                </DialogTitle>
+                <DialogTitle>{metrics.find((m) => m.id === selectedMetric)?.title}</DialogTitle>
                 <DialogContent>{selectedMetric && renderOverlayContent(selectedMetric)}</DialogContent>
             </Dialog>
         </Box>
