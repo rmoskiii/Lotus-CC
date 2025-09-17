@@ -19,8 +19,9 @@ import {
     Pagination,
 } from "@mui/material"
 import { Search } from "@mui/icons-material"
-import Sidebar from "@/components/Sidebar"
-import { DateRange } from "@mui/icons-material" // for the date filter button
+import Sidebar, {drawerWidth} from "@/components/Sidebar"
+import { DateRange } from "@mui/icons-material"
+import FixedHeader from "@/components/FixedHeader.tsx"; // for the date filter button
 
 interface AuditRecord {
     timestamp: string
@@ -100,28 +101,26 @@ export default function AuditReportPage() {
 
     return (
         <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "grey.50" }}>
-            <Sidebar onNavigate={() => {}} />
+            <Sidebar />
+            <FixedHeader
+                userName="Olalekan Babatunde"
+                userRole="Super Admin"
+                showIcons={true}
+            />
+            <Box
+                component="main"
+                sx={{
+                    flexGrow: 1,
+                    width: `calc(100vw - ${drawerWidth}px - 40px)`,
+                    mt: "44px",
+                    pr: 3,
+                    p: 3,
+                    pt: 4,
+                    pb: 4,
+                }}
+            >
 
-            <Box component="main" sx={{ flexGrow: 1, py: 5, px: 8 }}>
-                {/* Header */}
-                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                        <Box sx={{ width: 8, height: 8, bgcolor: "#1976d2", borderRadius: "50%" }} />
-                        <Typography variant="body2" color="text.secondary">
-                            Your last login was recorded on: July 30, 2025 | 12:00PM
-                        </Typography>
-                    </Box>
-                    <Typography variant="body2">
-                        <Box component="span" sx={{ color: "text.secondary" }}>
-                            Olalekan Babatunde |{" "}
-                        </Box>
-                        <Box component="span" sx={{ fontWeight: "medium" }}>
-                            Initiator
-                        </Box>
-                    </Typography>
-                </Box>
-
-                {/* Page Title */}
+            {/* Page Title */}
                 <Box sx={{ mb: 4 }}>
                     <Typography variant="h4" fontWeight="bold" sx={{ mb: 1, color: "#000000" }}>
                         Audit Trail & Reporting
@@ -195,10 +194,10 @@ export default function AuditReportPage() {
                 </Box>
 
                 {/* Audit Table */}
-                <TableContainer component={Paper} sx={{ mb: 3 }}>
-                    <Table>
+                <TableContainer component={Paper} sx={{ mb: 3, width: "100%" }}>
+                <Table>
                         <TableHead>
-                            <TableRow sx={{ bgcolor: "#1976d2" }}>
+                            <TableRow sx={{ bgcolor: "#1e3a8a" }}>
                                 <TableCell sx={{ color: "white", fontWeight: "bold" }}>Timestamp</TableCell>
                                 <TableCell sx={{ color: "white", fontWeight: "bold" }}>Action</TableCell>
                                 <TableCell sx={{ color: "white", fontWeight: "bold" }}>Performed By</TableCell>

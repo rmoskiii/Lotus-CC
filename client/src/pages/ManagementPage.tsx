@@ -41,11 +41,9 @@ import {
     CheckCircle,
     VpnKey,
     Cancel,
-    FiberManualRecord,
-    Description,
-    People,
 } from "@mui/icons-material"
-import Sidebar from "@/components/Sidebar"
+import Sidebar, { drawerWidth } from "@/components/Sidebar"
+import FixedHeader from "@/components/FixedHeader"
 
 interface Customer {
     accountNumber: string
@@ -259,34 +257,25 @@ export default function CustomerManagement() {
     if (currentView === "detail" && selectedCustomer) {
         return (
             <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "grey.50" }}>
-                <Sidebar onNavigate={handleNavigate} />
-
-                <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                    {/* Header */}
-                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                            <FiberManualRecord sx={{ fontSize: 8, color: "#1976d2" }} />
-                            <Typography variant="body2" color="text.secondary">
-                                Your last login was recorded on: July 30, 2025 | 12:00PM
-                            </Typography>
-                        </Box>
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                            <IconButton size="small">
-                                <Description />
-                            </IconButton>
-                            <IconButton size="small">
-                                <People />
-                            </IconButton>
-                            <Typography variant="body2">
-                                <Box component="span" sx={{ color: "text.secondary" }}>
-                                    Olalekan Babatunde |{" "}
-                                </Box>
-                                <Box component="span" sx={{ fontWeight: "medium" }}>
-                                    Initiator
-                                </Box>
-                            </Typography>
-                        </Box>
-                    </Box>
+                <Sidebar />
+                <FixedHeader
+                    userName="Olalekan Babatunde"
+                    userRole="Initiator"
+                    showIcons={true}
+                />
+                <Box
+                    component="main"
+                    sx={{
+                        flexGrow: 1,
+                        pt: 8, // Top padding for fixed header
+                        px: 6, // Consistent horizontal padding (same as list view)
+                        pb: 3,
+                        pl: 3, // Smaller left padding
+                        pr: 3, // Keep right padding
+                        overflow: "hidden",
+                        width: `calc(100vw - ${drawerWidth}px)`, // Proper width calculation
+                    }}
+                >
 
                     {/* Page Title */}
                     <Box sx={{ mb: 4 }}>
@@ -299,8 +288,7 @@ export default function CustomerManagement() {
                     </Box>
 
                     {/* Account Information Section */}
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} md={8}>
+                        <Grid item xs={12}>
                             <Card sx={{ mb: 3 }}>
                                 <CardContent sx={{ p: 3 }}>
                                     <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
@@ -430,7 +418,6 @@ export default function CustomerManagement() {
                                 </CardContent>
                             </Card>
                         </Grid>
-                    </Grid>
 
                     {/* Action Buttons */}
                     <Box sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}>
@@ -703,34 +690,14 @@ export default function CustomerManagement() {
 
     return (
         <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "grey.50" }}>
-            <Sidebar onNavigate={handleNavigate} />
+            <Sidebar  />
+            <FixedHeader
+                userName="Olalekan Babatunde"
+                userRole="Super Admin"
+                showIcons={true}
+            />
+            <Box component="main" sx={{ flexGrow: 1, p: 3, mt: '44px', width: `calc(100vw - ${drawerWidth}px - 50px)` }}>
 
-            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                {/* Header */}
-                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                        <FiberManualRecord sx={{ fontSize: 8, color: "#1976d2" }} />
-                        <Typography variant="body2" color="text.secondary">
-                            Your last login was recorded on: July 30, 2025 | 12:00PM
-                        </Typography>
-                    </Box>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                        <IconButton size="small">
-                            <Description />
-                        </IconButton>
-                        <IconButton size="small">
-                            <People />
-                        </IconButton>
-                        <Typography variant="body2">
-                            <Box component="span" sx={{ color: "text.secondary" }}>
-                                Olalekan Babatunde |{" "}
-                            </Box>
-                            <Box component="span" sx={{ fontWeight: "medium" }}>
-                                Initiator
-                            </Box>
-                        </Typography>
-                    </Box>
-                </Box>
 
                 {/* Page Title */}
                 <Box sx={{ mb: 4 }}>
@@ -785,7 +752,7 @@ export default function CustomerManagement() {
                         <TableContainer>
                             <Table>
                                 <TableHead>
-                                    <TableRow sx={{ bgcolor: "#1976d2" }}>
+                                    <TableRow sx={{ bgcolor: "#1e3a8a" }}>
                                         <TableCell sx={{ color: "white", fontWeight: "600" }}>Account Number</TableCell>
                                         <TableCell sx={{ color: "white", fontWeight: "600" }}>Full Name</TableCell>
                                         <TableCell sx={{ color: "white", fontWeight: "600" }}>Email</TableCell>

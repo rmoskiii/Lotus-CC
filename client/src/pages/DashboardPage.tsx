@@ -6,14 +6,9 @@ import {
     Card,
     CardContent,
     Typography,
-    Paper,
-    IconButton,
-    Chip,
-    Dialog,
-    DialogTitle,
-    DialogContent,
 } from "@mui/material"
 import { Grid } from "@mui/material"
+import FixedHeader from "@/components/FixedHeader"
 import {
     TrendingUp,
     TrendingDown,
@@ -22,9 +17,7 @@ import {
     AccountCircle,
     PersonOff,
     Info,
-    FiberManualRecord,
     ShowChart,
-    Chat,
 } from "@mui/icons-material"
 import {
     BarChart,
@@ -33,11 +26,6 @@ import {
     YAxis,
     CartesianGrid,
     ResponsiveContainer,
-    LineChart,
-    Line,
-    PieChart,
-    Pie,
-    Cell,
     Tooltip,
 } from "recharts"
 
@@ -59,31 +47,9 @@ const transactionData = [
     { month: "Dec", amount: 180 },
 ]
 
-const corporateAccountsData = [
-    { month: "Jan", accounts: 2650 },
-    { month: "Feb", accounts: 2720 },
-    { month: "Mar", accounts: 2780 },
-    { month: "Apr", accounts: 2820 },
-    { month: "May", accounts: 2847 },
-]
-
-const activeInactiveData = [
-    { name: "Active Accounts", value: 1647, color: "#1976d2" },
-    { name: "Inactive Accounts", value: 1200, color: "#d32f2f" },
-]
-
-const dailyTransactionTrend = [
-    { day: "Mon", transactions: 42000 },
-    { day: "Tue", transactions: 45200 },
-    { day: "Wed", transactions: 38000 },
-    { day: "Thu", transactions: 47500 },
-    { day: "Fri", transactions: 52000 },
-    { day: "Sat", transactions: 28000 },
-    { day: "Sun", transactions: 22000 },
-]
 
 export default function CorporateBankingDashboard() {
-    const [selectedMetric, setSelectedMetric] = useState<string | null>(null)
+    const [ setSelectedMetric] = useState<string | null>(null)
 
     const metrics = [
         {
@@ -124,105 +90,25 @@ export default function CorporateBankingDashboard() {
         },
     ]
 
-    // Overlay details
-    const renderOverlayContent = (metricId: string) => {
-        switch (metricId) {
-            case "corporate-accounts":
-                return (
-                    <Box sx={{ p: 2 }}>
-                        <ResponsiveContainer width="100%" height={300}>
-                            <LineChart data={corporateAccountsData}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="month" />
-                                <YAxis />
-                                <Tooltip cursor={{ fill: "transparent" }} />
-                                <Line type="monotone" dataKey="accounts" stroke="#1976d2" strokeWidth={2} />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </Box>
-                )
-
-            case "daily-transactions":
-                return (
-                    <Box sx={{ p: 2 }}>
-                        <ResponsiveContainer width="100%" height={300}>
-                            <BarChart data={dailyTransactionTrend}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="day" />
-                                <YAxis />
-                                <Tooltip cursor={{ fill: "transparent" }} />
-                                <Bar dataKey="transactions" fill="#2e7d32" radius={[18, 18, 0, 0]} />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </Box>
-                )
-
-            case "active-accounts":
-                return (
-                    <Box sx={{ p: 2 }}>
-                        <ResponsiveContainer width="100%" height={300}>
-                            <PieChart>
-                                <Pie
-                                    data={activeInactiveData}
-                                    cx="50%"
-                                    cy="50%"
-                                    labelLine={false}
-                                    label={({ name, percent }: any) => `${name} ${(percent * 100).toFixed(0)}%`}
-                                    outerRadius={80}
-                                    fill="#8884d8"
-                                    dataKey="value"
-                                >
-                                    {activeInactiveData.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={entry.color} />
-                                    ))}
-                                </Pie>
-                                <Tooltip cursor={{ fill: "transparent" }} />
-                            </PieChart>
-                        </ResponsiveContainer>
-                    </Box>
-                )
-
-            case "inactive-accounts":
-                return (
-                    <Box sx={{ p: 2 }}>
-                        <Typography variant="h6" sx={{ mb: 3 }}>
-                            Reactivation Opportunities
-                        </Typography>
-                        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                            <Paper sx={{ p: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                <Typography>Accounts inactive 30-60 days</Typography>
-                                <Chip label="245" variant="outlined" />
-                            </Paper>
-                            <Paper sx={{ p: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                <Typography>Accounts inactive 60-90 days</Typography>
-                                <Chip label="105" variant="outlined" />
-                            </Paper>
-                            <Paper sx={{ p: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                <Typography>Dormant accounts (&gt;90 days)</Typography>
-                                <Chip label="850" color="error" />
-                            </Paper>
-                        </Box>
-                    </Box>
-                )
-
-            default:
-                return null
-        }
-    }
-
     return (
         <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "grey.50" }}>
             {/* Sidebar */}
             <Sidebar />
 
+            <FixedHeader
+                userName="Olalekan Babatunde"
+                userRole="Super Admin"
+                showIcons={true}
+            />
             {/* Main Content */}
             <Box
                 component="main"
                 sx={{
                     flexGrow: 1,
-                    p: 3,
-                    width: `calc(100vw - ${drawerWidth}px)`,
+                    mt: '44px',
+                    p: 4,
                     overflow: "hidden",
+                    width: `calc(100vw - ${drawerWidth}px - 60px)`,
                 }}
             >
                 <Box
@@ -232,28 +118,6 @@ export default function CorporateBankingDashboard() {
                         width: { xs: "100%", md: "calc(100% / 0.8)" },
                     }}
                 >
-                    {/* Header */}
-                    <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                            <FiberManualRecord sx={{ fontSize: 8, color: "#1976d2" }} />
-                            <Typography variant="body2" color="text.secondary">
-                                Your last login was recorded on: July 30, 2025 | 12:00PM
-                            </Typography>
-                        </Box>
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                            <IconButton size="small">
-                                <Chat />
-                            </IconButton>
-                            <Typography variant="body2">
-                                <Box component="span" sx={{ color: "text.secondary" }}>
-                                    Olalekan Babatunde{" "}
-                                </Box>
-                                <Box component="span" sx={{ fontWeight: "medium" }}>
-                                    Super Admin
-                                </Box>
-                            </Typography>
-                        </Box>
-                    </Box>
 
                     {/* Page Title */}
                     <Box sx={{ mb: 4 }}>
@@ -325,23 +189,12 @@ export default function CorporateBankingDashboard() {
                                 <XAxis dataKey="month" />
                                 <YAxis />
                                 <Tooltip cursor={{ fill: "transparent" }} />
-                                <Bar dataKey="amount" fill="#1976d2" radius={[18, 18, 0, 0]} />
+                                <Bar dataKey="amount" fill="#1e3a8a" radius={[18, 18, 0, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
                     </Card>
                 </Box>
             </Box>
-
-            {/* Overlay Dialog */}
-            <Dialog
-                open={!!selectedMetric}
-                onClose={() => setSelectedMetric(null)}
-                fullWidth
-                maxWidth="md"
-            >
-                <DialogTitle>{metrics.find((m) => m.id === selectedMetric)?.title}</DialogTitle>
-                <DialogContent>{selectedMetric && renderOverlayContent(selectedMetric)}</DialogContent>
-            </Dialog>
         </Box>
     )
 }

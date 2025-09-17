@@ -28,6 +28,7 @@ import {
 } from "@mui/material"
 import { Search, CheckCircle, Cancel, Person } from "@mui/icons-material"
 import Sidebar from "@/components/Sidebar"
+import FixedHeader from "@/components/FixedHeader"
 
 interface PendingApproval {
     accountNumber: string
@@ -250,28 +251,13 @@ export default function ApprovalWorkflow() {
 
     return (
         <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "grey.50" }}>
-            <Sidebar onNavigate={() => {}} />
-
-            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                {/* Header */}
-                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                        <Box sx={{ width: 8, height: 8, bgcolor: "#1976d2", borderRadius: "50%" }} />
-                        <Typography variant="body2" color="text.secondary">
-                            Your last login was recorded on: July 30, 2025 | 12:00PM
-                        </Typography>
-                    </Box>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                        <Typography variant="body2">
-                            <Box component="span" sx={{ color: "text.secondary" }}>
-                                Olalekan Babatunde |{" "}
-                            </Box>
-                            <Box component="span" sx={{ fontWeight: "medium" }}>
-                                Initiator
-                            </Box>
-                        </Typography>
-                    </Box>
-                </Box>
+            <Sidebar  />
+            <FixedHeader
+                userName="Olalekan Babatunde"
+                userRole="Super Admin"
+                showIcons={true}
+            />
+            <Box component="main" sx={{ flexGrow: 1, p: 3, mt: '44px' }}>
 
                 {/* Page Title */}
                 <Box sx={{ mb: 4 }}>
@@ -313,7 +299,7 @@ export default function ApprovalWorkflow() {
                     <TableContainer component={Paper} sx={{ mb: 3 }}>
                         <Table>
                             <TableHead>
-                                <TableRow sx={{ bgcolor: "#1976d2" }}>
+                                <TableRow sx={{ bgcolor: "#1e3a8a" }}>
                                     <TableCell sx={{ color: "white", fontWeight: "bold" }}>Account Number</TableCell>
                                     <TableCell sx={{ color: "white", fontWeight: "bold" }}>Full Name</TableCell>
                                     <TableCell sx={{ color: "white", fontWeight: "bold" }}>Email</TableCell>

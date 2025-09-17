@@ -23,6 +23,7 @@ import {
     IconButton,
     Divider,
 } from "@mui/material"
+import FixedHeader from "@/components/FixedHeader"
 import { FiberManualRecord, Chat, PersonAdd, Add, Delete, CheckCircle } from "@mui/icons-material"
 import Sidebar, { drawerWidth } from "@/components/Sidebar"
 
@@ -474,43 +475,26 @@ export default function CustomerOnboarding() {
     return (
         <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "grey.50" }}>
             {/* Sidebar */}
-            <Sidebar onNavigate={(route) => console.log("Navigate to:", route)} />
-
+            <Sidebar />
+            <FixedHeader
+                userName="Olalekan Babatunde"
+                userRole="Super Admin"
+                showIcons={true}
+            />
             {/* Main Content */}
             <Box
                 component="main"
                 sx={{
                     flexGrow: 1,
+                    mt: '44px',
                     p: 3,
-                    width: `calc(100vw - ${drawerWidth}px)`,
+                    width: `calc(100vw - ${drawerWidth}px - 50px)`,
                     overflow: "hidden",
                 }}
             >
-                {/* Header */}
-                <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                        <FiberManualRecord sx={{ fontSize: 8, color: "#1976d2" }} />
-                        <Typography variant="body2" color="text.secondary">
-                            Your last login was recorded on: July 30, 2025 | 12:00PM
-                        </Typography>
-                    </Box>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                        <IconButton size="small">
-                            <Chat />
-                        </IconButton>
-                        <Typography variant="body2">
-                            <Box component="span" sx={{ color: "text.secondary" }}>
-                                Olalekan Babatunde {" "}
-                            </Box>
-                            <Box component="span" sx={{ fontWeight: "medium" }}>
-                                Initiator
-                            </Box>
-                        </Typography>
-                    </Box>
-                </Box>
 
                 {/* Page Title */}
-                <Box sx={{ mb: 4 }}>
+                <Box sx={{ mb: 5 }}>
                     <Typography variant="h4" fontWeight="bold" sx={{ mb: 1, color: "black" }}>
                         Customer Onboarding
                     </Typography>
