@@ -105,13 +105,15 @@ export default function CorporateBankingDashboard() {
                 component="main"
                 sx={{
                     flexGrow: 1,
-                    mt: '44px',
+                    mt: "44px",
                     p: 4,
-                    overflow: "hidden",
-                    width: `calc(100vw - ${drawerWidth}px - 60px)`,
+                    width: { xs: "100%", md: `calc(100vw - ${drawerWidth}px - 60px)` },
+                    overflowX: "auto",
+                    overflowY: "auto",
                 }}
             >
-                <Box
+
+            <Box
                     sx={{
                         transform: { xs: "scale(1)", md: "scale(0.8)" },
                         transformOrigin: "top left",

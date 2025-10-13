@@ -489,7 +489,8 @@ export default function CustomerOnboarding() {
                     mt: '44px',
                     p: 3,
                     width: `calc(100vw - ${drawerWidth}px - 50px)`,
-                    overflow: "hidden",
+                    overflowX: "auto",
+                    overflowY: "auto",
                 }}
             >
 

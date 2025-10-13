@@ -111,14 +111,16 @@ export default function AuditReportPage() {
                 component="main"
                 sx={{
                     flexGrow: 1,
-                    width: `calc(100vw - ${drawerWidth}px - 40px)`,
                     mt: "44px",
-                    pr: 3,
                     p: 3,
                     pt: 4,
                     pb: 4,
+                    width: { xs: "100%", md: `calc(100vw - ${drawerWidth}px)` },
+                    overflowX: "auto",
+                    overflowY: "auto",
                 }}
             >
+
 
             {/* Page Title */}
                 <Box sx={{ mb: 4 }}>

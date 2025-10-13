@@ -267,12 +267,13 @@ export default function CustomerManagement() {
                     component="main"
                     sx={{
                         flexGrow: 1,
-                        pt: 8, // Top padding for fixed header
-                        px: 6, // Consistent horizontal padding (same as list view)
+                        pt: 8,
+                        px: 6,
                         pb: 3,
-                        pl: 3, // Smaller left padding
-                        pr: 3, // Keep right padding
-                        overflow: "hidden",
+                        pl: 3,
+                        pr: 3,
+                        overflowX: "auto",
+                        overflowY: "auto",
                         width: `calc(100vw - ${drawerWidth}px)`, // Proper width calculation
                     }}
                 >
@@ -696,7 +697,9 @@ export default function CustomerManagement() {
                 userRole="Super Admin"
                 showIcons={true}
             />
-            <Box component="main" sx={{ flexGrow: 1, p: 3, mt: '44px', width: `calc(100vw - ${drawerWidth}px - 50px)` }}>
+            <Box component="main" sx={{ flexGrow: 1, p: 3, mt: '44px', width: `calc(100vw - ${drawerWidth}px)`, overflowX: "auto",
+                overflowY: "auto",
+            }}>
 
 
                 {/* Page Title */}

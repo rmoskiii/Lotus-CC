@@ -257,9 +257,20 @@ export default function ApprovalWorkflow() {
                 userRole="Super Admin"
                 showIcons={true}
             />
-            <Box component="main" sx={{ flexGrow: 1, p: 3, mt: '44px' }}>
+            <Box
+                component="main"
+                sx={{
+                    flexGrow: 1,
+                    mt: "44px",
+                    p: 3,
+                    width: `calc(100vw - ${280}px)`,
+                    overflowX: "auto",
+                    overflowY: "auto",
+                }}
+            >
 
-                {/* Page Title */}
+
+            {/* Page Title */}
                 <Box sx={{ mb: 4 }}>
                     <Typography variant="h4" fontWeight="bold" sx={{ mb: 1, color: "#000000" }}>
                         Approval Workflow
