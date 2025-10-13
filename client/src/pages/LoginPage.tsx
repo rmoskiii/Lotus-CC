@@ -16,7 +16,7 @@ import CountUp from "react-countup";
 export default function LoginPage() {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
-    const [form, setForm] = useState({ email: "", password: "", token: "" });
+    const [form, setForm] = useState({ email: "admin@lotus.com", password: "password123", token: "000000" });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
